@@ -1,11 +1,12 @@
 "use client";
 
+import { useWeddingVersion } from "@/hooks/useWeddingVersion";
 import { ChevronDown } from "lucide-react";
 import { FC } from "react";
-import { weddingData } from "../constants";
 
 const HeroSection: FC = () => {
-  const { groom, bride, weddingDateDisplay } = weddingData;
+  const { data, first, second } = useWeddingVersion();
+  const { weddingDateDisplay } = data;
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-20">
@@ -30,15 +31,15 @@ const HeroSection: FC = () => {
         <div className="ornament-line mb-8 w-40" />
 
         <h1 className="mb-2 font-display text-5xl italic leading-[1.05] text-gold-100 md:text-7xl lg:text-8xl">
-          <span className="gold-shimmer block">{bride.nickname}</span>
+          <span className="gold-shimmer block">{first.nickname}</span>
           <span className="my-2 inline-block font-script text-3xl text-gold-400 md:text-5xl">
             &
           </span>
-          <span className="gold-shimmer block">{groom.nickname}</span>
+          <span className="gold-shimmer block">{second.nickname}</span>
         </h1>
 
         <p className="mb-8 font-body text-xs uppercase tracking-[0.4em] text-white/45 md:text-sm">
-          {bride.name} &nbsp;·&nbsp; {groom.name}
+          {first.name} &nbsp;·&nbsp; {second.name}
         </p>
 
         <div className="ornament-line mb-8 w-40" />

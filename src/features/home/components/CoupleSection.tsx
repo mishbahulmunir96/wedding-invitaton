@@ -1,8 +1,8 @@
 "use client";
 
+import { useWeddingVersion } from "@/hooks/useWeddingVersion";
 import { Instagram } from "lucide-react";
 import { FC } from "react";
-import { weddingData } from "../constants";
 import { Person } from "@/types/wedding";
 
 interface CoupleCardProps {
@@ -51,7 +51,7 @@ const CoupleCard: FC<CoupleCardProps> = ({ person, reverse }) => {
 };
 
 const CoupleSection: FC = () => {
-  const { groom, bride } = weddingData;
+  const { first, second } = useWeddingVersion();
 
   return (
     <section className="section-reveal relative px-6 py-20 md:py-28">
@@ -67,7 +67,7 @@ const CoupleSection: FC = () => {
         </div>
 
         <div className="relative grid grid-cols-1 gap-16 md:grid-cols-[1fr_auto_1fr] md:gap-8 md:items-center">
-          <CoupleCard person={bride} />
+          <CoupleCard person={first} />
 
           <div className="flex items-center justify-center">
             <div
@@ -78,7 +78,7 @@ const CoupleSection: FC = () => {
             </div>
           </div>
 
-          <CoupleCard person={groom} reverse />
+          <CoupleCard person={second} reverse />
         </div>
       </div>
     </section>

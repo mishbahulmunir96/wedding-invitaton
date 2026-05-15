@@ -1,8 +1,8 @@
 "use client";
 
+import { useWeddingVersion } from "@/hooks/useWeddingVersion";
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { FC } from "react";
-import { weddingData } from "../constants";
 import { WeddingEvent } from "@/types/wedding";
 
 interface EventCardProps {
@@ -69,7 +69,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
 };
 
 const EventSection: FC = () => {
-  const { events } = weddingData;
+  const { data } = useWeddingVersion();
+  const { events } = data;
 
   return (
     <section className="section-reveal relative px-6 py-20 md:py-28">
@@ -85,7 +86,7 @@ const EventSection: FC = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12">
-          {events.map((event, idx) => (
+          {events.map((event: WeddingEvent, idx: number) => (
             <EventCard key={idx} event={event} />
           ))}
         </div>

@@ -23,6 +23,7 @@ export interface WeddingEvent {
 export interface WeddingData {
   groom: Person;
   bride: Person;
+  displayOrder: "bride-first" | "groom-first";
   weddingDate: string;
   weddingDateDisplay: {
     day: string;

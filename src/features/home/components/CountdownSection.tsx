@@ -1,7 +1,7 @@
 "use client";
 
+import { useWeddingVersion } from "@/hooks/useWeddingVersion";
 import { FC, useEffect, useState } from "react";
-import { WEDDING_DATE_ISO, weddingData } from "../constants";
 
 interface TimeLeft {
   days: number;
@@ -47,7 +47,8 @@ const CountBox: FC<CountBoxProps> = ({ value, label }) => {
 };
 
 const CountdownSection: FC = () => {
-  const targetDate = new Date(WEDDING_DATE_ISO);
+  const { data } = useWeddingVersion();
+  const targetDate = new Date(data.weddingDate);
 
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
@@ -70,7 +71,7 @@ const CountdownSection: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { weddingDateDisplay } = weddingData;
+  const { weddingDateDisplay } = data;
 
   return (
     <section className="section-reveal relative px-6 py-20 md:py-28">

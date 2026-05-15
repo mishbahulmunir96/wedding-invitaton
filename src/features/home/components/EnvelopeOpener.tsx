@@ -1,16 +1,17 @@
 "use client";
 
+import { useWeddingVersion } from "@/hooks/useWeddingVersion";
 import { Mail } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { FC } from "react";
-import { weddingData } from "../constants";
 
 interface EnvelopeOpenerProps {
   onOpen: () => void;
 }
 
 const EnvelopeOpener: FC<EnvelopeOpenerProps> = ({ onOpen }) => {
-  const { groom, bride, weddingDateDisplay } = weddingData;
+  const { data, first, second } = useWeddingVersion();
+  const { weddingDateDisplay } = data;
   const [guestName] = useQueryState("to");
   const [guestAddress] = useQueryState("alamat");
 
@@ -40,20 +41,20 @@ const EnvelopeOpener: FC<EnvelopeOpenerProps> = ({ onOpen }) => {
           style={{ animation: "float 6s ease-in-out infinite" }}
         >
           <span className="gold-shimmer font-monogram absolute left-2 top-0 text-7xl leading-none font-bold">
-            {bride.initial}
+            {first.initial}
           </span>
           <span className="font-script absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xl text-gold-400/50">
             &
           </span>
           <span className="gold-shimmer font-monogram absolute bottom-0 right-2 text-7xl leading-none font-bold">
-            {groom.initial}
+            {second.initial}
           </span>
         </div>
 
         <h1 className="mb-2 font-display text-3xl italic leading-tight md:text-4xl">
-          <span className="gold-shimmer">{bride.nickname}</span>
+          <span className="gold-shimmer">{first.nickname}</span>
           <span className="mx-2 font-script text-gold-400">&</span>
-          <span className="gold-shimmer">{groom.nickname}</span>
+          <span className="gold-shimmer">{second.nickname}</span>
         </h1>
 
         <p className="mb-6 font-body text-sm tracking-[0.3em] text-white/45">
