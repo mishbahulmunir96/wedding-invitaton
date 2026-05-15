@@ -1,44 +1,31 @@
 "use client";
 
+import { supabase } from "@/lib/supabase";
 import { Wish, WishFormValues } from "@/types/wish";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-
-const STORAGE_KEY = "wedding_wish_list";
 
 const useCreateWish = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (payload: WishFormValues): Promise<Wish> => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const { data, error } = await supabase
+        .from("wishes")
+        .insert({ name: payload.name, message: payload.message })
+        .select()
+        .single();
 
-      if (typeof window === "undefined") {
-        throw new Error("Storage tidak tersedia");
-      }
+      if (error) throw new Error(error.message);
 
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      const list: Wish[] = raw ? JSON.parse(raw) : [];
-
-      const newWish: Wish = {
-        id: Date.now(),
-        name: payload.name,
-        message: payload.message,
-        createdAt: new Date().toISOString(),
-      };
-
-      list.unshift(newWish);
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-
-      return newWish;
+      return data as Wish;
     },
     onSuccess: () => {
       toast.success("Terima kasih atas ucapan dan doanya!");
       queryClient.invalidateQueries({ queryKey: ["wish-list"] });
     },
-    onError: (error: AxiosError<any>) => {
-      toast.error(error.response?.data?.message ?? "Gagal mengirim ucapan");
+    onError: (error: Error) => {
+      toast.error(error.message ?? "Gagal mengirim ucapan");
     },
   });
 };

@@ -1,9 +1,10 @@
 "use client";
 
-import { Check, Copy, Wallet } from "lucide-react";
+import { Check, Copy, SendHorizonal, Wallet } from "lucide-react";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import { BankAccount, bankAccounts } from "../constants";
+import GiftConfirmationModal from "./GiftConfirmationModal";
 
 interface BankCardProps {
   account: BankAccount;
@@ -70,6 +71,8 @@ const BankCard: FC<BankCardProps> = ({ account }) => {
 };
 
 const GiftSection: FC = () => {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <section className="section-reveal relative px-6 py-20 md:py-28">
       <div className="mx-auto max-w-4xl">
@@ -92,7 +95,24 @@ const GiftSection: FC = () => {
             <BankCard key={idx} account={account} />
           ))}
         </div>
+
+        <div className="mt-10 text-center">
+          <p className="mb-4 font-body text-sm text-white/40">
+            Sudah melakukan transfer? Kirimkan konfirmasi beserta bukti transfer.
+          </p>
+          <button
+            type="button"
+            onClick={() => setShowModal(true)}
+            className="group relative inline-flex items-center gap-3 overflow-hidden rounded-sm border border-gold-500/60 bg-gold-500/10 px-8 py-3 font-body text-sm uppercase tracking-[0.3em] text-gold-200 transition hover:border-gold-400 hover:bg-gold-500/20"
+          >
+            <SendHorizonal className="h-4 w-4" />
+            <span>Konfirmasi Transfer</span>
+            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold-300/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+          </button>
+        </div>
       </div>
+
+      {showModal && <GiftConfirmationModal onClose={() => setShowModal(false)} />}
     </section>
   );
 };
