@@ -1,7 +1,6 @@
 "use client";
 
 import { useWeddingVersion } from "@/hooks/useWeddingVersion";
-import { Instagram } from "lucide-react";
 import { FC } from "react";
 import { Person } from "@/types/wedding";
 
@@ -39,13 +38,13 @@ const CoupleCard: FC<CoupleCardProps> = ({ person, reverse }) => {
         {person.address}
       </p>
 
-      <button
+      {/* <button
         type="button"
         aria-label={`Instagram ${person.name}`}
         className="mt-5 flex h-9 w-9 items-center justify-center rounded-full border border-gold-500/30 text-gold-400 transition hover:border-gold-400 hover:text-gold-300"
       >
         <Instagram className="h-4 w-4" />
-      </button>
+      </button> */}
     </div>
   );
 };
